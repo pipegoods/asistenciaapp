@@ -21,7 +21,7 @@ import {
 } from '@/components/ui/popover'
 import { cn } from '@/lib/utils'
 import { format } from 'date-fns'
-import { CalendarIcon } from 'lucide-react'
+import { CalendarIcon, Check, ChevronsUpDown } from 'lucide-react'
 import { Calendar } from '@/components/ui/calendar'
 import {
   Select,
@@ -33,6 +33,13 @@ import {
 import { coachs } from '@prisma/client'
 import { es } from 'date-fns/locale'
 import { addNewClass } from '@/app/actions/add-new-class'
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+} from './ui/command'
 
 const formSchema = z.object({
   date: z.date({
@@ -155,26 +162,74 @@ export function CreateNewClass({ coaches }: CreateNewClassProps) {
           control={form.control}
           name="coachId"
           render={({ field }) => (
-            <FormItem>
+            <FormItem className="flex flex-col">
               <FormLabel>Profesor</FormLabel>
-              <Select onValueChange={field.onChange}>
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Selecciona el profesor" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  {coaches.map((coach) => (
-                    <SelectItem key={coach.id} value={coach.id.toString()}>
-                      {coach.name} {coach.lastName}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <FormControl>
+                    <Button
+                      variant="outline"
+                      role="combobox"
+                      className={cn(
+                        'justify-between',
+                        !field.value && 'text-muted-foreground'
+                      )}
+                    >
+                      {field.value
+                        ? coaches.find(
+                            (coach) => coach.id.toString() === field.value
+                          )?.name +
+                          ' ' +
+                          coaches.find(
+                            (coach) => coach.id.toString() === field.value
+                          )?.lastName
+                        : 'Selecciona el profesor'}
+                      <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                    </Button>
+                  </FormControl>
+                </PopoverTrigger>
+                <PopoverContent className="p-0">
+                  <Command>
+                    <CommandInput placeholder="Busca el profesor..." />
+                    <CommandEmpty>No se encontró el profesor.</CommandEmpty>
+                    <CommandGroup>
+                      {coaches.map((coach) => (
+                        <CommandItem
+                          key={coach.id}
+                          onSelect={(value) => {
+                            const coachSelected = coaches.find((coach) => {
+                              const fullNameLowerCase = `${coach.name.toLowerCase()} ${coach.lastName.toLowerCase()}`
+                              return fullNameLowerCase === value
+                            })
+
+                            if (!coachSelected) return
+
+                            form.setValue(
+                              'coachId',
+                              coachSelected.id.toString()
+                            )
+                          }}
+                        >
+                          <Check
+                            className={cn(
+                              'mr-2 h-4 w-4',
+                              coach.id.toString() === field.value
+                                ? 'opacity-100'
+                                : 'opacity-0'
+                            )}
+                          />
+                          {coach.name} {coach.lastName}
+                        </CommandItem>
+                      ))}
+                    </CommandGroup>
+                  </Command>
+                </PopoverContent>
+              </Popover>
               <FormMessage />
             </FormItem>
           )}
         />
+
         <Button type="submit" disabled={pending}>
           {pending ? 'Guardando...' : 'Guardar'}
         </Button>
