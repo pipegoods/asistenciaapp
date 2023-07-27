@@ -15,7 +15,7 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { useTransition } from 'react'
-import { addNewStudent } from '@/app/actions/add-new-student'
+import { addNewCoach } from '@/app/actions/add-new-coach'
 
 const formSchema = z.object({
   name: z.string().min(2, {
@@ -32,7 +32,7 @@ const formSchema = z.object({
   }),
 })
 
-export function CreateNewStudent() {
+export function CreateNewCoach() {
   const [pending, startTransition] = useTransition()
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -44,7 +44,7 @@ export function CreateNewStudent() {
     // ✅ This will be type-safe and validated.
 
     startTransition(() => {
-      addNewStudent(values)
+      addNewCoach(values)
     })
   }
 
