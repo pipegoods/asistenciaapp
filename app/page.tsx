@@ -26,7 +26,7 @@ export default async function Home() {
   })
 
   return (
-    <main className="container my-10 grid grid-cols-3 gap-5">
+    <main className="container my-10 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
       <Card>
         <CardHeader>
           <CardTitle>Agrega un estudiante</CardTitle>
@@ -39,7 +39,7 @@ export default async function Home() {
         </CardContent>
       </Card>
 
-      <Card className="col-span-2">
+      <Card className="md:col-span-2">
         <CardHeader>
           <CardTitle>Ultimos estudiantes</CardTitle>
           <CardDescription>
@@ -68,7 +68,7 @@ export default async function Home() {
         </CardContent>
       </Card>
 
-      <Card className="col-span-2">
+      <Card className="md:col-span-2">
         <CardHeader>
           <CardTitle>Ultimos profesores</CardTitle>
           <CardDescription>
@@ -121,7 +121,7 @@ export default async function Home() {
         </CardContent>
       </Card>
 
-      <Card className="col-span-2">
+      <Card className="md:col-span-2">
         <CardHeader>
           <CardTitle>Ultimas clases</CardTitle>
           <CardDescription>
