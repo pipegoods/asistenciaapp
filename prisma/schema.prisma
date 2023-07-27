@@ -18,4 +18,40 @@ model coachs {
   phone     String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  classes classes[]
+}
+
+model students {
+  id        Int      @id @default(autoincrement())
+  name      String
+  lastName  String
+  email     String   @unique
+  phone     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  assistances assistances[]
+}
+
+model classes {
+  id        Int      @id @default(autoincrement())
+  date      DateTime
+  time      String
+  coach     coachs   @relation(fields: [coachId], references: [id])
+  coachId   Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  assistances assistances[]
+}
+
+model assistances {
+  id        Int      @id @default(autoincrement())
+  student   students @relation(fields: [studentId], references: [id])
+  studentId Int
+  class     classes  @relation(fields: [classId], references: [id])
+  classId   Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
