@@ -25,6 +25,9 @@ export default async function Home() {
       time: true,
       coach: true,
     },
+    orderBy: {
+      date: 'desc',
+    },
   })
 
   return (
