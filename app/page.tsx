@@ -12,6 +12,8 @@ import { prisma } from '@/lib/prisma'
 import { CreateNewClass } from '@/components/create-new-class'
 import { format } from 'date-fns'
 import { es } from 'date-fns/locale'
+import { getFirstCharFromNameAndLastName } from '@/lib/utils'
+import { ModalDetailsClass } from '@/components/modal-details-class'
 
 export default async function Home() {
   const students = await prisma.students.findMany()
@@ -54,7 +56,12 @@ export default async function Home() {
                   src="https://ui.shadcn.com/avatars/02.png"
                   alt="Avatar"
                 />
-                <AvatarFallback>OM</AvatarFallback>
+                <AvatarFallback>
+                  {getFirstCharFromNameAndLastName({
+                    name: student.name,
+                    lastName: student.lastName,
+                  })}
+                </AvatarFallback>
               </Avatar>
               <div className="ml-4 space-y-1">
                 <p className="text-sm font-medium leading-none">
@@ -83,7 +90,12 @@ export default async function Home() {
                   src="https://ui.shadcn.com/avatars/02.png"
                   alt="Avatar"
                 />
-                <AvatarFallback>OM</AvatarFallback>
+                <AvatarFallback>
+                  {getFirstCharFromNameAndLastName({
+                    name: coach.name,
+                    lastName: coach.lastName,
+                  })}
+                </AvatarFallback>
               </Avatar>
               <div className="ml-4 space-y-1">
                 <p className="text-sm font-medium leading-none">
@@ -146,9 +158,7 @@ export default async function Home() {
                   {classItem.time}
                 </p>
               </div>
-              <div className="ml-auto text-sm font-medium">
-                {classItem.coach.name} {classItem.coach.lastName}
-              </div>
+              <ModalDetailsClass classObject={classItem} students={students} />
             </div>
           ))}
         </CardContent>

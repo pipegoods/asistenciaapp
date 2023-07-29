@@ -39,7 +39,7 @@ import {
   CommandGroup,
   CommandInput,
   CommandItem,
-} from './ui/command'
+} from '@/components/ui/command'
 
 const formSchema = z.object({
   date: z.date({
