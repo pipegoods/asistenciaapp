@@ -1,6 +1,6 @@
 'use client'
 
-import { Button } from './ui/button'
+import { Button } from '@/components/ui/button'
 
 import { experimental_useFormStatus as useFormStatus } from 'react-dom'
 

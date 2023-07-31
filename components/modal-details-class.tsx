@@ -15,8 +15,10 @@ import { AddAssitanceStudent } from './add-assistance-student'
 import { prisma } from '@/lib/prisma'
 import { revalidatePath } from 'next/cache'
 import { getFirstCharFromNameAndLastName } from '@/lib/utils'
-import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { ButtonSubmitAddAssistance } from './button-submit-add-assistance'
+import { Check } from 'lucide-react'
+import { DeleteAssistanceStudent } from './delete-assistance-student'
 
 interface ModalDetailsClassProps {
   students: students[]
@@ -118,6 +120,8 @@ export async function ModalDetailsClass({
                     {assistance.student.email}
                   </p>
                 </div>
+
+                <DeleteAssistanceStudent assistanceId={assistance.id} />
               </div>
             ))}
           </ul>
