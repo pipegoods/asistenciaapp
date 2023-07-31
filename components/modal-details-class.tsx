@@ -17,7 +17,6 @@ import { revalidatePath } from 'next/cache'
 import { getFirstCharFromNameAndLastName } from '@/lib/utils'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { ButtonSubmitAddAssistance } from './button-submit-add-assistance'
-import { Check } from 'lucide-react'
 import { DeleteAssistanceStudent } from './delete-assistance-student'
 
 interface ModalDetailsClassProps {
