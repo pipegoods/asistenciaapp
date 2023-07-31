@@ -16,8 +16,16 @@ import { getFirstCharFromNameAndLastName } from '@/lib/utils'
 import { ModalDetailsClass } from '@/components/modal-details-class'
 
 export default async function Home() {
-  const students = await prisma.students.findMany()
-  const coaches = await prisma.coachs.findMany()
+  const students = await prisma.students.findMany({
+    include: {
+      assistances: true,
+    },
+  })
+  const coaches = await prisma.coachs.findMany({
+    include: {
+      classes: true,
+    },
+  })
   const classes = await prisma.classes.findMany({
     select: {
       id: true,
@@ -72,7 +80,9 @@ export default async function Home() {
                 </p>
                 <p className="text-sm text-muted-foreground">{student.email}</p>
               </div>
-              <div className="ml-auto font-medium">10 clases</div>
+              <div className="ml-auto font-medium">
+                {student.assistances.length} clases
+              </div>
             </div>
           ))}
         </CardContent>
@@ -106,7 +116,9 @@ export default async function Home() {
                 </p>
                 <p className="text-sm text-muted-foreground">{coach.email}</p>
               </div>
-              <div className="ml-auto font-medium">10 clases</div>
+              <div className="ml-auto font-medium">
+                {coach.classes.length} clases
+              </div>
             </div>
           ))}
         </CardContent>
