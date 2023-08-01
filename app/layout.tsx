@@ -1,3 +1,4 @@
+import { Header } from '@/components/header'
 import { TailwindIndicator } from '@/components/tailwind-indicator'
 import { fontSans } from '@/lib/fonts'
 import { cn } from '@/lib/utils'
@@ -22,6 +23,7 @@ export default function RootLayout({
           fontSans.variable
         )}
       >
+        <Header />
         {children}
         <TailwindIndicator />
       </body>
